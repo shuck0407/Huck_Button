@@ -54,6 +54,7 @@ def bacteria_name(sample_df):
 
 def getsampleresults(sample):
     
+    app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
     db = SQLAlchemy(app)
 
