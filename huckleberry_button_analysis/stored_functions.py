@@ -55,18 +55,18 @@ def bacteria_name(sample_df):
 def getsampleresults(sample):
 
     # Create engine using the `bellybutton.sqlite` database file
-    engine = create_engine("sqlite:///db/bellybutton.sqlite")
-    Base = automap_base()
-    Base.prepare(engine, reflect=True)
+    #engine = create_engine("sqlite:///db/bellybutton.sqlite")
+    #Base = automap_base()
+    #Base.prepare(engine, reflect=True)
 
     #Assign the samples and samples_metadata classes to variables
-    Samples = Base.classes.samples
-    sample_metadata = Base.classes.sample_metadata
+    #Samples = Base.classes.samples
+    #sample_metadata = Base.classes.sample_metadata
 
-    session = Session(engine)
+    #session = Session(engine)
 
     #Query all of the data in the samples table and make a dataframe
-    sql_stmt = session.query(Samples).statement
+    sql_stmt = db.session.query(Samples).statement
     samples_df = pd.read_sql_query(sql_stmt, session.bind)
 
 
