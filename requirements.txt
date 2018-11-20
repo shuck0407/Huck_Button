@@ -17,6 +17,7 @@ parso==0.1.0
 passlib==1.7.1
 pexpect==4.3.0
 pickleshare==0.7.4
+plotly==3.4.1
 prompt-toolkit==1.0.15
 psycopg2==2.7.3.2
 ptyprocess==0.5.2
