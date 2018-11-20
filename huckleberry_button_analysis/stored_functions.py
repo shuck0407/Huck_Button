@@ -159,10 +159,14 @@ def bubble_chart_data(sample):
     return bubble_chart
 
 def get_metadata(sample):
-    # Create engine using the `bellybutton.sqlite` database file
-    engine = create_engine("sqlite:///db/bellybutton.sqlite")
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+    db = SQLAlchemy(app)
+
+    # reflect an existing database into a new model
     Base = automap_base()
-    Base.prepare(engine, reflect=True)
+    Base.prepare(db.engine, reflect=True)
+    Base.classes.keys()
 
     #Assign the samples_metadata class to variable
     sample_metadata = Base.classes.sample_metadata
