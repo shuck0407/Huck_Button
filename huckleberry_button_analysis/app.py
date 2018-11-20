@@ -26,32 +26,6 @@ import plotly.graph_objs as go
 #Flask setup
 app = Flask(__name__)
 
-#################################################
-# Database Setup
-#################################################
-
-#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./db/bellybutton.sqlite"
-#db = SQLAlchemy(app)
-
-# Database Setup
-
-engine = create_engine("sqlite:///db/bellybutton.sqlite")
-
-# reflect an existing database into a new model
-Base = automap_base()
-# reflect the tables
-Base.prepare(engine, reflect=True)
-
-
-# reflect an existing database into a new model
-#Base = automap_base()
-## reflect the tables
-#Base.prepare(db.engine, reflect=True)
-
-# Save references to each table
-Samples_metadata = Base.classes.sample_metadata
-Samples = Base.classes.samples
-
 #Define each Flask route
 @app.route("/")
 def welcome():
