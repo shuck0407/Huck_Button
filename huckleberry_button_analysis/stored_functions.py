@@ -171,10 +171,8 @@ def get_metadata(sample):
     #Assign the samples_metadata class to variable
     sample_metadata = Base.classes.sample_metadata
 
-    session = Session(engine)
-
     #Query all of the data in the samples table and make a dataframe
-    results = session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
+    results = db.session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
     
     meta_dict =  {
         'Age':results.AGE,
