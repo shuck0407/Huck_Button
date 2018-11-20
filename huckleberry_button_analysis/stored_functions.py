@@ -67,7 +67,7 @@ def getsampleresults(sample):
 
     #Query all of the data in the samples table and make a dataframe
     sql_stmt = db.session.query(Samples).statement
-    samples_df = pd.read_sql_query(sql_stmt, session.bind)
+    samples_df = pd.read_sql_query(sql_stmt, db.session.bind)
 
 
     #Slice the dataframe so that only the column for the sample remains
