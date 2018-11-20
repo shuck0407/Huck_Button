@@ -6,7 +6,7 @@ import os
 import json
 
 #Import Python functions from the stored_functions.py file
-from functions.stored_functions import stored_functions
+from app.stored_functions import bacteria_name, getsampleresults, pie_chart_data, bubble_chart_data, get_metadata
 
 #sqlqlchemy libs
 import sqlalchemy
