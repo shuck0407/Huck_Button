@@ -5,8 +5,8 @@ import pandas as pd
 import os
 import json
 
-#Import the stored  functions file
-import stored_functions
+#Import Python functions from the stored_functions.py file
+from functions.stored_functions import stored_functions
 
 #sqlqlchemy libs
 import sqlalchemy
