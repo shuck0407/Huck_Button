@@ -26,6 +26,23 @@ import plotly.graph_objs as go
 #Flask setup
 app = Flask(__name__)
 
+#################################################
+# Database Setup
+#################################################
+
+# Establishing connection to database
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+db = SQLAlchemy(app)
+
+# reflect an existing database into a new model
+Base = automap_base()
+Base.prepare(db.engine, reflect=True)
+Base.classes.keys()
+
+# Save references to each table
+Samples = Base.classes.samples
+Samples_metadata = Base.classes.sample_metadata
+
 #Define each Flask route
 @app.route("/")
 def welcome():
@@ -44,17 +61,8 @@ def samplepick(sample):
 
 @app.route("/buttons")
 def buttons():
-    engine = create_engine("sqlite:///db/bellybutton.sqlite")
-
-    Base = automap_base()
     
-    Base.prepare(engine, reflect=True)
-    Samples_metadata = Base.classes.sample_metadata
-
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
-
-    sql_stmt2 = session.query(Samples_metadata).statement
+    sql_stmt2 = Session.query(Samples_metadata).statement
     metadata_df = pd.read_sql_query(sql_stmt2, session.bind)
 
     #populate the bellybutton dropdown list
