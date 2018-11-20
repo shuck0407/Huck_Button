@@ -61,8 +61,16 @@ def samplepick(sample):
 
 @app.route("/buttons")
 def buttons():
+    engine = create_engine("sqlite:///db/bellybutton.sqlite")
+    Base = automap_base()
     
-    sql_stmt2 = Session.query(Samples_metadata).statement
+    Base.prepare(engine, reflect=True)
+    Samples_metadata = Base.classes.sample_metadata
+
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+       
+    sql_stmt2 = session.query(Samples_metadata).statement
     metadata_df = pd.read_sql_query(sql_stmt2, session.bind)
 
     #populate the bellybutton dropdown list
