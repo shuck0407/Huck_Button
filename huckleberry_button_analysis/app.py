@@ -35,7 +35,7 @@ app = Flask(__name__)
 
 # Database Setup
 
-engine = create_engine("sqlite:///./db/bellybutton.sqlite")
+engine = create_engine("sqlite:///bellybutton.sqlite")
 
 # reflect an existing database into a new model
 Base = automap_base()
