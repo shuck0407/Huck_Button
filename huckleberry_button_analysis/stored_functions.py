@@ -53,22 +53,21 @@ def bacteria_name(sample_df):
     return sample_df
 
 def getsampleresults(sample):
+    
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+    db = SQLAlchemy(app)
 
-    # Create engine using the `bellybutton.sqlite` database file
-    #engine = create_engine("sqlite:///db/bellybutton.sqlite")
-    #Base = automap_base()
-    #Base.prepare(engine, reflect=True)
+    # reflect an existing database into a new model
+    Base = automap_base()
+    Base.prepare(db.engine, reflect=True)
+    Base.classes.keys()
 
-    #Assign the samples and samples_metadata classes to variables
-    #Samples = Base.classes.samples
-    #sample_metadata = Base.classes.sample_metadata
-
-    #session = Session(engine)
-
+    # Save reference to samples table
+    Samples = Base.classes.samples
+   
     #Query all of the data in the samples table and make a dataframe
     sql_stmt = db.session.query(Samples).statement
     samples_df = pd.read_sql_query(sql_stmt, db.session.bind)
-
 
     #Slice the dataframe so that only the column for the sample remains
     sel_col_list = ['otu_id', 'otu_label', sample]
@@ -159,20 +158,22 @@ def bubble_chart_data(sample):
     return bubble_chart
 
 def get_metadata(sample):
-     # Create engine using the `bellybutton.sqlite` database file
-    engine = create_engine("sqlite:///db/bellybutton.sqlite")
-    Base = automap_base()
-    Base.prepare(engine, reflect=True)
+   
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
+    db = SQLAlchemy(app)
 
-    #Assign the samples_metadata class to variable
+    # reflect an existing database into a new model
+    Base = automap_base()
+    Base.prepare(db.engine, reflect=True)
+    Base.classes.keys()
+
+    # Save reference to metadata table
     sample_metadata = Base.classes.sample_metadata
 
-    session = Session(engine)
-
     #Query all of the data in the samples table and make a dataframe
-    sql_stmt = session.query(sample_metadata).statement
+    sql_stmt = db.session.query(sample_metadata).statement
         
-    results = session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
+    results = db.session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
     
     meta_dict =  {
         'Age':results.AGE,
