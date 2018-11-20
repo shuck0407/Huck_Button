@@ -6,7 +6,10 @@ import os
 import json
 
 #Import Python functions from the stored_functions.py file
-from .stored_functions import bacteria_name, getsampleresults, pie_chart_data, bubble_chart_data, get_metadata
+from .stored_functions import (bacteria_name, getsampleresults, pie_chart_data, bubble_chart_data, get_metadata)
+
+from flask import (Flask, render_template, jsonify, redirect)
+from flask_sqlalchemy import SQLAlchemy
 
 #sqlqlchemy libs
 import sqlalchemy
@@ -20,11 +23,8 @@ import plotly.plotly as py
 import plotly.figure_factory as ff
 import plotly.graph_objs as go
 
-from flask import Flask, render_template, jsonify, redirect
-from flask_sqlalchemy import SQLAlchemy
-
+#Flask setup
 app = Flask(__name__)
-app.debug = True
 
 #################################################
 # Database Setup
@@ -33,8 +33,14 @@ app.debug = True
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "") or "sqlite:///db/bellybutton.sqlite"
 db = SQLAlchemy(app)
 
-from .models import Samples, Samples_metadata
+# reflect an existing database into a new model
+Base = automap_base()
+# reflect the tables
+Base.prepare(db.engine, reflect=True)
 
+# Save references to each table
+Samples_metadata = Base.classes.sample_metadata
+Samples = Base.classes.samples
 
 #Define each Flask route
 @app.route("/")
