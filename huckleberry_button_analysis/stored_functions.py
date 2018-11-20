@@ -158,22 +158,18 @@ def bubble_chart_data(sample):
     return bubble_chart
 
 def get_metadata(sample):
-   
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
-    db = SQLAlchemy(app)
-
-    # reflect an existing database into a new model
+    # Create engine using the `bellybutton.sqlite` database file
+    engine = create_engine("sqlite:///db/bellybutton.sqlite")
     Base = automap_base()
-    Base.prepare(db.engine, reflect=True)
-    Base.classes.keys()
+    Base.prepare(engine, reflect=True)
 
-    # Save reference to metadata table
+    #Assign the samples_metadata class to variable
     sample_metadata = Base.classes.sample_metadata
 
+    session = Session(engine)
+
     #Query all of the data in the samples table and make a dataframe
-    sql_stmt = db.session.query(sample_metadata).statement
-        
-    results = db.session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
+    results = session.query(sample_metadata).filter(sample_metadata.sample == sample).first()
     
     meta_dict =  {
         'Age':results.AGE,
