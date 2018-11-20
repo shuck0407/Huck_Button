@@ -15,7 +15,7 @@ import plotly.plotly as py
 import plotly.figure_factory as ff
 import plotly.graph_objs as go
 
-from flask import Flask, render_template, jsonify, redirect
+from flask import (Flask, render_template, jsonify, redirect)
 from flask_sqlalchemy import SQLAlchemy
 
 def bacteria_name(sample_df):    
