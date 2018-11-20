@@ -63,7 +63,7 @@ def samplepick(sample):
 def buttons():
     
     sql_stmt2 = db.session.query(Samples_metadata).statement
-    metadata_df = pd.read_sql_query(sql_stmt2, session.bind)
+    metadata_df = pd.read_sql_query(sql_stmt2, db.session.bind)
 
     #populate the bellybutton dropdown list
     buttons = metadata_df['sample'].tolist()
