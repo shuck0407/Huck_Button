@@ -51,9 +51,9 @@ def welcome():
 @app.route("/samples/<sample>")
 def samplepick(sample):
 
-    pie_chart = stored_functions.pie_chart_data(sample)
-    bubble_chart = stored_functions.bubble_chart_data(sample)
-    meta_chart = stored_functions.get_metadata(sample)
+    pie_chart = pie_chart_data(sample)
+    bubble_chart = bubble_chart_data(sample)
+    meta_chart = get_metadata(sample)
 
     chart_dict = {'pie': pie_chart, 'bubble': bubble_chart, 'meta': meta_chart}
 
